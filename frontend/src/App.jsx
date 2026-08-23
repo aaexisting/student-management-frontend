@@ -62,6 +62,34 @@ async function getStudentsByCourse(){
       setCourseStudents(data)
 }
 
+async function registerUser() {
+  try {
+    const response = await fetch(
+      'https://student-management-api.fastapicloud.dev/register',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      }
+    );
+
+    const data = await response.json();
+    console.log("status:", response.status);
+    console.log("response:", data);
+
+    if (response.status === 200 || response.status === 201) {
+      alert("Registered successfully! You can now log in.");
+      setPage("login");
+    } else {
+      alert(data.detail || "Registration failed");
+    }
+  } catch (error) {
+    console.error("Register error:", error);
+  }
+}
+
 async function loginUser() {
        try {
     const formBody = new URLSearchParams();
@@ -234,7 +262,7 @@ async function loginUser() {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button>Register</button>
+          <button onClick={registerUser}> Register</button>
         </div>
       )}
 
