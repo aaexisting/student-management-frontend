@@ -112,9 +112,13 @@ async function loginUser() {
     console.log("response:", data);
 
     if (response.status == 200) {
+      alert ("Logged in successfully!") ;
       setToken(data.access_token)
       console.log("Token saved!")
       setPage("dashboard")
+
+    }
+    else{ alert(data.detail || "Login failed");
 
     }
 
