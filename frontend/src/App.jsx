@@ -11,6 +11,9 @@ function App() {
   const [courses , setCourses]  = useState([])
   const [courseName, setCourseName] = useState(" ")
   const [courseStudents, setCourseStudents] = useState([])
+  const [studentName, setStudentName] = useState(" ")
+  const [studentAge, setStudentAge] = useState(" ")
+  const [studentMajor, setStudentMajor] = useState(" ")
 
 
 
@@ -111,7 +114,7 @@ async function loginUser() {
     console.log("status:", response.status);
     console.log("response:", data);
 
-    if (response.status == 200) {
+    if (response.status === 200) {
       alert ("Logged in successfully!") ;
       setToken(data.access_token)
       console.log("Token saved!")
@@ -127,7 +130,42 @@ async function loginUser() {
   }
 }
 
+async function addStudent(){
+      try {
 
+          const response = await fetch(
+              'https://student-management-api.fastapicloud.dev/students',
+              {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": `Bearer ${token}`,
+                  },
+                  body: JSON.stringify({
+                      name: studentName,
+                      age: studentAge,
+                      major: studentMajor,
+                  }),
+              }
+          )
+          const data = await response.json()
+          console.log("Add student:", response.status, data)
+
+          if (response.ok) {
+              alert("Student added successfully!")
+              setStudentName("")
+              setStudentAge("")
+              setStudentMajor("")
+              setPage("students")
+              getStudents()
+          } else {
+              alert("Failed to add student")
+          }
+      }catch (error){
+          console.error(error)
+          alert("Could not connect to server")
+      }
+}
 
 
   return (
@@ -200,6 +238,19 @@ async function loginUser() {
       margin: '8px',
     }}>
             🔐 Login
+        </button>
+
+        <button onClick={()=> setPage('addStudent')}
+         style={{
+      width: '160px',
+      height: '100px',
+      fontSize: '18px',
+      borderRadius: '12px',
+      border: '1px solid #ccc',
+      cursor: 'pointer',
+      margin: '8px',
+    }}>
+            Add Student
         </button>
 
 
@@ -284,6 +335,34 @@ async function loginUser() {
             onChange={(e) => setLoginPassword(e.target.value)}
           />
           <button onClick={loginUser}>Login</button>
+        </div>
+      )}
+
+      {page === 'addStudent' && (
+        <div>
+          <h2>Add Student</h2>
+          <input
+            type="text"
+            placeholder="Student Name"
+            onChange={(e) => setStudentName(e.target.value)}
+          />
+
+          <input
+            type="number"
+            placeholder="Age"
+            onChange={(e) => setStudentAge(e.target.value)}
+          />
+
+          <input
+              type = "text"
+              placeholder = "Major"
+              onChange={(e) => setStudentMajor(e.target.value)}
+          />
+
+          <button onClick={addStudent}>
+              Add Student
+          </button>
+
         </div>
       )}
       </div>
