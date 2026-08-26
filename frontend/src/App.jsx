@@ -285,29 +285,32 @@ async function addCourse(){
       }
 }
 
-async function deleteCourse(){
-      try{
-          const data = await fetch(
-              `https://student-management-api.fastapicloud.dev/courses/${deleteCourseName}`,
-              {
-                  method : "DELETE",
-                  headers : {
-                      Authorization: `Bearer ${token}`,
-                  },
-              }
-          );
-          if (response.ok){
-              alert("Course deleted successfully!");
-              setDeleteCourseName("");
-              setPage("courses");
-              getCourses();
-          } else {
-              alert(JSON.stringify(data.detail || data));
-          }
-      } catch (error) {
-          console.error(error);
-          alert("Could not connect to server");
+async function deleteCourse() {
+  try {
+    const response = await fetch(
+      `https://student-management-api.fastapicloud.dev/courses/${deleteCourseName}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Course deleted successfully!");
+      setDeleteCourseName("");
+      setPage("courses");
+      getCourses();
+    } else {
+      alert(JSON.stringify(data.detail || data));
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Could not connect to server");
+  }
 }
 
   return (
