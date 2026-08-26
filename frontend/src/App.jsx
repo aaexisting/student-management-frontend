@@ -19,6 +19,8 @@ function App() {
   const [updateAge, setUpdateAge] = useState(" ")
   const [updateMajor, setUpdateMajor] = useState(" ")
   const [deleteId, setDeleteId] = useState("")
+  const [courseHours , setCourseHours] = useState("")
+  const [deleteCourse, setDeleteCourse] = useState("")
 
 
 
@@ -251,7 +253,37 @@ async function deleteStudent() {
   }
 }
 
+async function addCourse(){
+      try{
+          const response = await fetch(
+              `https://student-management-api.fastapicloud.dev/courses`,
+              {
+                  method : "POST",
+                  headers : {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                  },
+                  body : JSON.stringify({
+                      name : courseName,
+                      course_hours : Number(courseHours),
+                  }),
+              }
+          );
+          const data = await response.json()
 
+          if (response.ok){
+              alert("Course added successfully!");
+              setCourseName("");
+              setCourseHours("");
+              setPage("courses");
+          } else {
+              alert(JSON.stringify(data.detail || data);
+          }
+      }  catch (error) {
+          console.error(error);
+          alert("Could not connect to server");
+      }
+}
 
   return (
     <div>
@@ -336,7 +368,7 @@ async function deleteStudent() {
       cursor: 'pointer',
       margin: '8px',
     }}>
-            Add Student
+           ➕ Add Student
         </button>
 
          <button onClick={()=> setPage('updateStudent')}
@@ -349,7 +381,7 @@ async function deleteStudent() {
       cursor: 'pointer',
       margin: '8px',
     }}>
-            Update Student
+          ✏️  Update Student
         </button>
 
         <button onClick={() => setPage("deleteStudent")}
@@ -364,6 +396,20 @@ async function deleteStudent() {
     }}>
             🗑️ Delete Student
         </button>
+
+        <button onClick={() => setPage("addCourse")}
+                 style={{
+      width: '160px',
+      height: '100px',
+      fontSize: '18px',
+      borderRadius: '12px',
+      border: '1px solid #ccc',
+      cursor: 'pointer',
+      margin: '8px',
+    }}>
+          ➕  Add Course
+        </button>
+
 
 
 
@@ -477,6 +523,28 @@ async function deleteStudent() {
 
         </div>
       )}
+
+        {page === 'addCourse' && (
+        <div>
+          <h2>Add Course</h2>
+          <input
+            type="text"
+            placeholder="Course Name"
+            onChange={(e) => setCourseName(e.target.value)}
+          />
+
+          <input
+            type="number"
+            placeholder="Credit Hours"
+            onChange={(e) => setCourseHours(e.target.value)}
+          />
+
+          <button onClick={addCourse}>
+              Add Course
+          </button>
+          </div>
+      )}
+
 
         {page === "deleteStudent" && (
             <div>
