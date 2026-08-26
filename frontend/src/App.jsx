@@ -175,39 +175,46 @@ async function addStudent() {
   }
 }
 
-async function updateStudent(){}
+async function updateStudent() {
+  try {
     const response = await fetch(
-        "https://student-management-api.fastapicloud.dev/students/${updateId}",
-        {
-            method : "PATCH",
-            headers : {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-            body : JSON.stringify({
-                    name: updateName,
-                    age: Number(updateAge),
-                    major: updateMajor,
-                }),
-            }
-        );
-        const data = await response.json()
-        if (response.ok) {
-            alert("Student updated successfully!");
-            setUpdateId("");
-            setUpdateName("");
-            setUpdateAge("");
-            setUpdateMajor("");
-            setPage("students");
-            getStudents();
-        } else {
-            alert(data.detail || "Failed to update student");
-    }
+      "https://student-management-api.fastapicloud.dev/students/${updateId}",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Bearer ${token},
+        },
+        body: JSON.stringify({
+          name: updateName,
+          age: Number(updateAge),
+          major: updateMajor,
+        }),
+      }
+    );
 
-   } catch (error) {
-    console.error("ERROR:", error);
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Student updated successfully!");
+
+      setUpdateId("");
+      setUpdateName("");
+      setUpdateAge("");
+      setUpdateMajor("");
+
+      setPage("students");
+      getStudents();
+    } else {
+      alert(data.detail || "Failed to update student");
+    }
+  } catch (error) {
+    console.error(error);
     alert("Could not connect to server");
   }
+}
+
+
 
 
 
