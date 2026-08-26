@@ -288,7 +288,7 @@ async function addCourse(){
 async function deleteCourse(){
       try{
           const data = await fetch(
-              `https://student-management-api.fastapicloud.dev/courses${deleteCourseName}`,
+              `https://student-management-api.fastapicloud.dev/courses/${deleteCourseName}`,
               {
                   method : "DELETE",
                   headers : {
