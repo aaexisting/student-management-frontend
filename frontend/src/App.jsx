@@ -277,7 +277,7 @@ async function addCourse(){
               setCourseHours("");
               setPage("courses");
           } else {
-              alert(JSON.stringify(data.detail || data);
+              alert(JSON.stringify(data.detail || data));
           }
       }  catch (error) {
           console.error(error);
