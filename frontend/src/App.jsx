@@ -224,7 +224,7 @@ async function updateStudent() {
 async function deleteStudent() {
   try {
     const response = await fetch(
-     " https://student-management-api.fastapicloud.dev/students/${deleteId}",
+     `https://student-management-api.fastapicloud.dev/students/${deleteId}`,
       {
         method: "DELETE",
         headers: {
