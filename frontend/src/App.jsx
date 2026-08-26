@@ -18,6 +18,7 @@ function App() {
   const [updateName, setUpdateName] = useState(" ")
   const [updateAge, setUpdateAge] = useState(" ")
   const [updateMajor, setUpdateMajor] = useState(" ")
+  const [deleteId, setDeleteId] = useState("")
 
 
 
@@ -188,18 +189,14 @@ async function updateStudent() {
         updateData.major = updateMajor;
     }
     const response = await fetch(
-      "https://student-management-api.fastapicloud.dev/students/${updateId}",
+      `https://student-management-api.fastapicloud.dev/students/${updateId}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          name: updateName,
-          age: Number(updateAge),
-          major: updateMajor,
-        }),
+        body: JSON.stringify(updateData),
       }
     );
 
@@ -216,7 +213,7 @@ async function updateStudent() {
       setPage("students");
       getStudents();
     } else {
-      alert(data.detail || "Failed to update student");
+      alert(JSON.stringify(data.detail || data));
     }
   } catch (error) {
     console.error(error);
@@ -224,7 +221,35 @@ async function updateStudent() {
   }
 }
 
+async function deleteStudent() {
+  try {
+    const response = await fetch(
+     " https://student-management-api.fastapicloud.dev/students/${deleteId}",
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Student deleted successfully!");
+
+      setDeleteId("");
+      setPage("students");
+      getStudents();
+    } else {
+      alert(JSON.stringify(data.detail || data));
+    }
+
+  } catch (error) {
+    console.error("Delete error:", error);
+    alert("Could not connect to server");
+  }
+}
 
 
 
@@ -325,6 +350,19 @@ async function updateStudent() {
       margin: '8px',
     }}>
             Update Student
+        </button>
+
+        <button onClick={() => setPage("deleteStudent")}
+         style={{
+      width: '160px',
+      height: '100px',
+      fontSize: '18px',
+      borderRadius: '12px',
+      border: '1px solid #ccc',
+      cursor: 'pointer',
+      margin: '8px',
+    }}>
+            🗑️ Delete Student
         </button>
 
 
@@ -439,6 +477,23 @@ async function updateStudent() {
 
         </div>
       )}
+
+        {page === "deleteStudent" && (
+            <div>
+                <h2> Delete Student</h2>
+
+                <input
+                    type = "number"
+                    placeholder = "Student Id"
+                    onChange={(e) => setDeleteId(e.target.value)}
+                 />
+
+                <button onClick={deleteStudent}>
+                    Delete Student
+                </button>
+             </div>
+      )}
+
 
         {page === "updateStudent" && (
              <div>
