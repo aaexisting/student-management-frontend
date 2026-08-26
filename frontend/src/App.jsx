@@ -177,6 +177,16 @@ async function addStudent() {
 
 async function updateStudent() {
   try {
+      const updateData = {};
+      if (updateName.trim()) {
+      updateData.name = updateName;
+    }
+    if (updateAge.trim()) {
+      updateData.age = Number(updateAge);
+    }
+    if (updateMajor.trim()) {
+        updateData.major = updateMajor;
+    }
     const response = await fetch(
       "https://student-management-api.fastapicloud.dev/students/${updateId}",
       {
