@@ -20,7 +20,7 @@ function App() {
   const [updateMajor, setUpdateMajor] = useState(" ")
   const [deleteId, setDeleteId] = useState("")
   const [courseHours , setCourseHours] = useState("")
-  const [deleteCourse, setDeleteCourse] = useState("")
+  const [deleteCourseName, setDeleteCourseName] = useState("")
 
 
 
@@ -285,6 +285,30 @@ async function addCourse(){
       }
 }
 
+async function deleteCourse(){
+      try{
+          const data = await fetch(
+              `https://student-management-api.fastapicloud.dev/courses`,
+              {
+                  method : "DELETE",
+                  headers : {
+                      Authorization: `Bearer ${token}`,
+                  },
+              }
+          );
+          if (response.ok){
+              alert("Course deleted successfully!");
+              setDeleteCourseName("");
+              setPage("courses");
+          } else {
+              alert(JSON.stringify(data.detail || data));
+          }
+      } catch (error) {
+          console.error(error);
+          alert("Could not connect to server");
+      }
+}
+
   return (
     <div>
       <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>
@@ -408,6 +432,19 @@ async function addCourse(){
       margin: '8px',
     }}>
           ➕  Add Course
+        </button>
+
+        <button onClick={() => setPage("deleteCourse")}
+                 style={{
+      width: '160px',
+      height: '100px',
+      fontSize: '18px',
+      borderRadius: '12px',
+      border: '1px solid #ccc',
+      cursor: 'pointer',
+      margin: '8px',
+    }}>
+           🗑️ Delete Course
         </button>
 
 
@@ -558,6 +595,22 @@ async function addCourse(){
 
                 <button onClick={deleteStudent}>
                     Delete Student
+                </button>
+             </div>
+      )}
+
+         {page === "deleteCourse" && (
+            <div>
+                <h2> Delete Course</h2>
+
+                <input
+                    type = "text"
+                    placeholder = "Course Name"
+                    onChange={(e) => setDeleteCourseName(e.target.value)}
+                 />
+
+                <button onClick={deleteCourse}>
+                    Delete Course
                 </button>
              </div>
       )}
