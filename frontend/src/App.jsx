@@ -265,7 +265,7 @@ async function addCourse(){
                   },
                   body : JSON.stringify({
                       name : courseName,
-                      course_hours : Number(courseHours),
+                      credit_hours : Number(courseHours),
                   }),
               }
           );
