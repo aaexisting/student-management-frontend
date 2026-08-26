@@ -14,6 +14,11 @@ function App() {
   const [studentName, setStudentName] = useState(" ")
   const [studentAge, setStudentAge] = useState(" ")
   const [studentMajor, setStudentMajor] = useState(" ")
+  const [updateId, setUpdateId] = useState(" ")
+  const [updateName, setUpdateName] = useState(" ")
+  const [updateAge, setUpdateAge] = useState(" ")
+  const [updateMajor, setUpdateMajor] = useState(" ")
+
 
 
 
@@ -130,42 +135,80 @@ async function loginUser() {
   }
 }
 
-async function addStudent(){
-      try {
-
-          const response = await fetch(
-              'https://student-management-api.fastapicloud.dev/students',
-              {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                      "Authorization": `Bearer ${token}`,
-                  },
-                  body: JSON.stringify({
-                      name: studentName,
-                      age: studentAge,
-                      major: studentMajor,
-                  }),
-              }
-          )
-          const data = await response.json()
-          console.log("Add student:", response.status, data)
-
-          if (response.ok) {
-              alert("Student added successfully!")
-              setStudentName("")
-              setStudentAge("")
-              setStudentMajor("")
-              setPage("students")
-              getStudents()
-          } else {
-              alert("Failed to add student")
-          }
-      }catch (error){
-          console.error(error)
-          alert("Could not connect to server")
+async function addStudent() {
+  try {
+    const response = await fetch(
+      "https://student-management-api.fastapicloud.dev/students",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: studentName,
+          age: Number(studentAge),
+          major: studentMajor,
+        }),
       }
+    );
+
+    const data = await response.json();
+
+    console.log("Status:", response.status);
+    console.log("Response:", data);
+
+    if (response.ok) {
+      alert("Student added successfully!");
+      setStudentName("");
+      setStudentAge("");
+      setStudentMajor("");
+      setPage("students");
+      getStudents();
+    } else {
+      alert(data.detail || "Failed to add student");
+    }
+
+  } catch (error) {
+    console.error("ERROR:", error);
+    alert("Could not connect to server");
+  }
 }
+
+async function updateStudent(){}
+    const response = await fetch(
+        "https://student-management-api.fastapicloud.dev/students/${updateId}",
+        {
+            method : "PATCH",
+            headers : {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body : JSON.stringify({
+                    name: updateName,
+                    age: Number(updateAge),
+                    major: updateMajor,
+                }),
+            }
+        );
+        const data = await response.json()
+        if (response.ok) {
+            alert("Student updated successfully!");
+            setUpdateId("");
+            setUpdateName("");
+            setUpdateAge("");
+            setUpdateMajor("");
+            setPage("students");
+            getStudents();
+        } else {
+            alert(data.detail || "Failed to update student");
+    }
+
+   } catch (error) {
+    console.error("ERROR:", error);
+    alert("Could not connect to server");
+  }
+
 
 
   return (
@@ -240,7 +283,8 @@ async function addStudent(){
             🔐 Login
         </button>
 
-        <button onClick={()=> setPage('addStudent')}
+
+         <button onClick={()=> setPage('addStudent')}
          style={{
       width: '160px',
       height: '100px',
@@ -251,6 +295,19 @@ async function addStudent(){
       margin: '8px',
     }}>
             Add Student
+        </button>
+
+         <button onClick={()=> setPage('updateStudent')}
+         style={{
+      width: '160px',
+      height: '100px',
+      fontSize: '18px',
+      borderRadius: '12px',
+      border: '1px solid #ccc',
+      cursor: 'pointer',
+      margin: '8px',
+    }}>
+            Update Student
         </button>
 
 
@@ -365,6 +422,41 @@ async function addStudent(){
 
         </div>
       )}
+
+        {page === "updateStudent" && (
+             <div>
+                 <h2>Update Student</h2>
+
+                 <input
+                     type="number"
+                     placeholder="Student Id"
+                     onChange={(e) => setUpdateId(e.target.value)}
+                 />
+
+                 <input
+                     type="text"
+                     placeholder="New Name"
+                     onChange={(e) => setUpdateName(e.target.value)}
+                 />
+
+                 <input
+                     type = "number"
+                     placeholder = "New Age"
+                     onChange={(e) => setUpdateAge(e.target.value)}
+                 />
+
+                 <input
+                     type = "text"
+                     placeholder = "New Major"
+                     onChange={(e) => setUpdateMajor(e.target.value)}
+                 />
+
+                 <button onClick={updateStudent}>
+                     Update Student
+                 </button>
+              </div>
+      )}
+
       </div>
   )
 }
