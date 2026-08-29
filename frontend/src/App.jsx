@@ -8,6 +8,7 @@ function App() {
   const [loginUsername , setLoginUsername] = useState(" ")
   const [loginPassword , setLoginPassword] = useState(" ")
   const [token , setToken] = useState(" ")
+  const [role, setRole] = useState(" ")
   const [courses , setCourses]  = useState([])
   const [courseName, setCourseName] = useState(" ")
   const [courseStudents, setCourseStudents] = useState([])
@@ -125,6 +126,7 @@ async function loginUser() {
     if (response.status === 200) {
       alert ("Logged in successfully!") ;
       setToken(data.access_token)
+      setRole(data.role)
       console.log("Token saved!")
       setPage("dashboard")
 
@@ -402,14 +404,16 @@ async function deleteCourse() {
                 </div>
             )}
 
-             {page === "dashboard" && (
-                 <div>
-                     <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>
-                         Student Management System
-                     </h1>
-                     <h2>Dashboard</h2>
-                     <button onClick={() => setPage("studentMenu")}
-                             style={{
+
+              {page === "adminDashboard" && (
+                  <div>
+                      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>
+                          Student Management System
+                      </h1>
+                      <h2>👨‍💼 Admin Dashboard</h2>
+
+                      <button onClick={() => setPage("studentMenu")}
+                              style={{
                                   width: '160px',
                                   height: '100px',
                                   fontSize: '18px',
@@ -417,23 +421,88 @@ async function deleteCourse() {
                                   border: '1px solid #ccc',
                                   cursor: 'pointer',
                                   margin: '8px',
-                             }}>
-                         ‍🎓 Students
-                     </button>
-                     <button onClick={() => setPage("courseMenu")}
-                     style={{
-                              width: '160px',
-                              height: '100px',
-                              fontSize: '18px',
-                              borderRadius: '12px',
-                              border: '1px solid #ccc',
-                              cursor: 'pointer',
-                              margin: '8px',
-                          }}>
-                         📚 Courses
-                     </button>
-                 </div>
-             )}
+                              }}>
+                          🎓 Students
+                      </button>
+
+                      <button onClick={() => setPage("courseMenu")}
+                              style={{
+                                  width: '160px',
+                                  height: '100px',
+                                  fontSize: '18px',
+                                  borderRadius: '12px',
+                                  border: '1px solid #ccc',
+                                  cursor: 'pointer',
+                                  margin: '8px',
+                              }}>
+                          📚 Courses
+                      </button>
+
+                      <button onClick={() => setPage("enrollment")}
+                              style={{
+                                  width: '160px',
+                                  height: '100px',
+                                  fontSize: '18px',
+                                  borderRadius: '12px',
+                                  border: '1px solid #ccc',
+                                  cursor: 'pointer',
+                                  margin: '8px',
+                              }}>
+                          🔗 Enrollment
+                      </button>
+                  </div>
+              )}
+
+          {page === "studentDashboard" && (
+              <div>
+                  <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>
+                      Student Management System
+                  </h1>
+                  <h2>👨‍🎓 Student Dashboard</h2>
+
+                  <button onClick={() => setPage("myCourses")}
+                style={{
+                    width: '160px',
+                    height: '100px',
+                    fontSize: '18px',
+                    borderRadius: '12px',
+                    border: '1px solid #ccc',
+                    cursor: 'pointer',
+                    margin: '8px',
+                }}>
+                      📚 My Courses
+                  </button>
+
+                  <button onClick={() => setPage("timetable")}
+                style={{
+                    width: '160px',
+                    height: '100px',
+                    fontSize: '18px',
+                    borderRadius: '12px',
+                    border: '1px solid #ccc',
+                    cursor: 'pointer',
+                    margin: '8px',
+                }}>
+                      🕐 My Timetable
+                  </button>
+
+                  <button onClick={() => setPage("schedule")}
+                style={{
+                    width: '160px',
+                    height: '100px',
+                    fontSize: '18px',
+                    borderRadius: '12px',
+                    border: '1px solid #ccc',
+                    cursor: 'pointer',
+                    margin: '8px',
+                }}>
+                      📅 Schedule Planner
+                  </button>
+              </div>
+          )}
+
+
+
 
               {page === "studentMenu" && (
                   <div>
@@ -504,7 +573,7 @@ async function deleteCourse() {
                       </button>
                       <br />
                       <br />
-                      <button onClick={() => setPage("dashboard")}>
+                      <button onClick={() => setPage("adminDashboard")}>
                           ← Back to Dashboard
                       </button>
                   </div>
@@ -556,7 +625,7 @@ async function deleteCourse() {
 
                       <br />
                       <br />
-                      <button onClick={() => setPage("dashboard")}>
+                      <button onClick={() => setPage("adminDashboard")}>
                         ← Back to Dashboard
                       </button>
               </div>
