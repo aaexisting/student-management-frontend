@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 function App() {
-  const [page, setPage] = useState('home')
+  const [page, setPage] = useState('welcome')
   const [students, setStudents] = useState([])
   const [username ,setUsername] = useState(" ")
   const [password, setPassword] = useState(" ")
@@ -314,142 +314,165 @@ async function deleteCourse() {
 }
 
   return (
-    <div>
-      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>
-          Student Management System
-      </h1>
 
-        <button onClick={() => setPage('students')}
-               style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-            👨 Students
-        </button>
+      <div>
+          {page === "welcome" && (
+              <div>
+                  <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>
+                      Student Management System
+                  </h1>
+                  <h2>Welcome!</h2>
+                  <p>Please Login or Register to continue.</p>
+                  <button onClick={() => setPage("register")}
+                          style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
+                      📝 Register
+                  </button>
 
-        <button onClick={() => setPage('courses')}
-                 style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-
-            📚 Courses
-        </button>
-
-        <button onClick={() => setPage('courseStudents')}
-         style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-            🔎Students By Course
-        </button>
-
-        <button onClick={() => setPage('register')}
-         style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-            📝 Register
-        </button>
-
-        <button onClick={() => setPage('login')}
-         style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-            🔐 Login
-        </button>
+                  <button onClick={() => setPage("login")}
+                          style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                            }}>
+                      🔐 Login
+                  </button>
+              </div>
+          )}
 
 
-         <button onClick={()=> setPage('addStudent')}
-         style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-           ➕ Add Student
-        </button>
+           {page === "register" && (
+               <div>
+                   <h2>Register Page</h2>
+                   <input
+                       type="text"
+                       placeholder="Username"
+                       onChange={(e) => setUsername(e.target.value)}
+                   />
 
-         <button onClick={()=> setPage('updateStudent')}
-         style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-          ✏️  Update Student
-        </button>
+                   <input
+                       type="password"
+                       placeholder="Password"
+                       onChange={(e) => setPassword(e.target.value)}
+                   />
 
-        <button onClick={() => setPage("deleteStudent")}
-         style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-            🗑️ Delete Student
-        </button>
+                   <button onClick={registerUser}>
+                       Register
+                   </button>
 
-        <button onClick={() => setPage("addCourse")}
-                 style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-          ➕  Add Course
-        </button>
+                   <button onClick={() => setPage("welcome")}>
+                       Back
+                   </button>
+               </div>
+           )}
 
-        <button onClick={() => setPage("deleteCourse")}
-                 style={{
-      width: '160px',
-      height: '100px',
-      fontSize: '18px',
-      borderRadius: '12px',
-      border: '1px solid #ccc',
-      cursor: 'pointer',
-      margin: '8px',
-    }}>
-           🗑️ Delete Course
-        </button>
+            {page === "login" && (
+                <div>
+                    <h2>Login Page</h2>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        onChange={(e) => setLoginUsername(e.target.value)}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                    />
+
+                    <button onClick={loginUser}>
+                        Login
+                    </button>
+
+                    <button onClick={() => setPage("welcome")}>
+                        Back
+                    </button>
+                </div>
+            )}
+
+             {page === "dashboard" && (
+                 <div>
+                     <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>
+                         Student Management System
+                     </h1>
+                     <h2>Dashboard</h2>
+                     <button onClick={() => setPage("studentMenu")}>
+                         ‍🎓 Students
+                     </button>
+                     <button onClick={() => setPage("courseMenu")}>
+                         📚 Courses
+                     </button>
+                 </div>
+             )}
+
+              {page === "studentMenu" && (
+                  <div>
+                      <h2>👨‍🎓 Students</h2>
+                      <button onClick={() => setPage("students")}>
+                            👥 View Students
+                      </button>
+
+                      <button onClick={() => setPage("addStudent")}>
+                            ➕ Add Student
+                      </button>
+
+                      <button onClick={() => setPage("updateStudent")}>
+                            ✏️ Update Student
+                      </button>
+
+                      <button onClick={() => setPage("deleteStudent")}>
+                            🗑️ Delete Student
+                      </button>
+
+                      <button onClick={() => setPage("courseStudents")}>
+                            🔎 View Student Courses
+                      </button>
+                      <br />
+                      <br />
+                      <button onClick={() => setPage("dashboard")}>
+                          ← Back to Dashboard
+                      </button>
+                  </div>
+              )}
+
+          {page === "courseMenu" && (
+              <div>
+                  <h2>📚 Courses</h2>
+                      <button onClick={() => setPage("courses")}>
+                          📋 View Courses
+                      </button>
+
+                      <button onClick={() => setPage("addCourse")}>
+                        ➕ Add Course
+                      </button>
+
+                      <button onClick={() => setPage("deleteCourse")}>
+                        🗑️ Delete Course
+                      </button>
+
+                      <button onClick={() => setPage("courseStudents")}>
+                        👥 View Students in Course
+                      </button>
+
+                      <br />
+                      <br />
+                      <button onClick={() => setPage("dashboard")}>
+                        ← Back to Dashboard
+                      </button>
+              </div>
+          )}
 
 
 
@@ -465,7 +488,7 @@ async function deleteCourse() {
               <p>Major: {student.major}</p>
             </div>
           ))}
-          <button onClick={() => setPage('dashboard')}>Back to Dashboard</button>
+          <button onClick={() => setPage('studentMenu')}>Back</button>
         </div>
       )}
 
@@ -479,7 +502,7 @@ async function deleteCourse() {
               <p>Credit Hours: {course.credit_hours}</p>
             </div>
           ))}
-          <button onClick={() => setPage('dashboard')}>Back to Dashboard</button>
+          <button onClick={() => setPage('courseMenu')}>Back</button>
         </div>
       )}
 
@@ -499,41 +522,7 @@ async function deleteCourse() {
               <p>Major: {student.major}</p>
             </div>
           ))}
-          <button onClick={() => setPage('dashboard')}>Back to Dashboard</button>
-        </div>
-      )}
-
-      {page === 'register' && (
-        <div>
-          <h2>Register Page</h2>
-          <input
-            type="text"
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button onClick={registerUser}> Register</button>
-        </div>
-      )}
-
-      {page === 'login' && (
-        <div>
-          <h2>Login Page</h2>
-          <input
-            type="text"
-            placeholder="Username"
-            onChange={(e) => setLoginUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setLoginPassword(e.target.value)}
-          />
-          <button onClick={loginUser}>Login</button>
+          <button onClick={() => setPage('studentMenu')}>Back</button>
         </div>
       )}
 
@@ -562,6 +551,7 @@ async function deleteCourse() {
               Add Student
           </button>
 
+          <button onClick={() => setPage('studentMenu')}>Back</button>
         </div>
       )}
 
@@ -583,6 +573,8 @@ async function deleteCourse() {
           <button onClick={addCourse}>
               Add Course
           </button>
+
+          <button onClick={() => setPage('courseMenu')}>Back</button>
           </div>
       )}
 
@@ -600,6 +592,8 @@ async function deleteCourse() {
                 <button onClick={deleteStudent}>
                     Delete Student
                 </button>
+
+                <button onClick={() => setPage('studentMenu')}>Back</button>
              </div>
       )}
 
@@ -616,6 +610,8 @@ async function deleteCourse() {
                 <button onClick={deleteCourse}>
                     Delete Course
                 </button>
+
+                <button onClick={() => setPage('courseMenu')}>Back</button>
              </div>
       )}
 
@@ -651,6 +647,8 @@ async function deleteCourse() {
                  <button onClick={updateStudent}>
                      Update Student
                  </button>
+
+                 <button onClick={() => setPage('studentMenu')}>Back</button>
               </div>
       )}
 
