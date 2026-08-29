@@ -273,8 +273,7 @@ async function addCourse(){
                       Authorization: `Bearer ${token}`,
                   },
                   body : JSON.stringify({
-                      name : courseName,
-                      credit_hours : Number(courseHours),
+                      course_names: [enrollmentCourseName],
                   }),
               }
           );
@@ -329,6 +328,7 @@ async function addCourseToStudent() {
                 {
                     method: "POST",
                     headers: {
+                        "Content-Type" : "application/json",
                         Authorization: `Bearer ${token}`,
                     },
                      body: JSON.stringify({
