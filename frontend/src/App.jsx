@@ -23,7 +23,7 @@ function App() {
   const [courseHours , setCourseHours] = useState("")
   const [deleteCourseName, setDeleteCourseName] = useState("")
   const [enrollmentId , setEnrollmentId] = useState(" ")
-  const [selectedCourses , setSelectedCourses]  = useState(" ")
+  const [selectedCourses , setSelectedCourses]  = useState([])
 
 
 
@@ -273,7 +273,8 @@ async function addCourse(){
                       Authorization: `Bearer ${token}`,
                   },
                   body : JSON.stringify({
-                      course_names: [enrollmentCourseName],
+                      name: courseName,
+                      credit_hours: Number(courseHours),
                   }),
               }
           );
@@ -353,7 +354,7 @@ async function addCourseToStudent() {
 async function deleteCourseFromStudent() {
         try {
             const response = await fetch(
-                `https://student-management-api.fastapicloud.dev/students/${enrollmentId}/courses/${enrollmentCourseName}`,
+                `https://student-management-api.fastapicloud.dev/students/${enrollmentId}/courses`,
                 {
                     method: "DELETE",
                     headers: {
@@ -366,7 +367,6 @@ async function deleteCourseFromStudent() {
             if (response.ok){
                 alert("Course removed from student successfully!");
                 setEnrollmentId("")
-                setEnrollmentCourseName("")
             } else {
                 alert(JSON.stringify(data.detail || data));
             }
