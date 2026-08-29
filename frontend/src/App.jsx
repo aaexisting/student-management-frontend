@@ -22,6 +22,8 @@ function App() {
   const [deleteId, setDeleteId] = useState("")
   const [courseHours , setCourseHours] = useState("")
   const [deleteCourseName, setDeleteCourseName] = useState("")
+  const [enrollmentId , setEnrollmentId] = useState(" ")
+  const [enrollmentCourseName , setEnrollmentCourseName]  = useState(" ")
 
 
 
@@ -318,6 +320,58 @@ async function deleteCourse() {
     console.error(error);
     alert("Could not connect to server");
   }
+}
+
+async function addCourseToStudent() {
+        try {
+            const response = await fetch(
+                `https://student-management-api.fastapicloud.dev/students/${enrollmentId}/courses/${enrollmentCourseName}`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const data = await response.json()
+
+            if (response.ok){
+                alert("Student is enrolled!");
+                setEnrollmentId("")
+                setEnrollmentCourseName("")
+            } else {
+                alert(JSON.stringify(data.detail || data));
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Could not connect to server");
+        }
+}
+
+async function deleteCourseFromStudent() {
+        try {
+            const response = await fetch(
+                `https://student-management-api.fastapicloud.dev/students/${enrollmentId}/courses/${enrollmentCourseName}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const data = await response.json()
+
+            if (response.ok){
+                alert("Course removed from student successfully!");
+                setEnrollmentId("")
+                setEnrollmentCourseName("")
+            } else {
+                alert(JSON.stringify(data.detail || data));
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Could not connect to server");
+        }
 }
 
   return (
@@ -636,6 +690,46 @@ async function deleteCourse() {
               </div>
           )}
 
+          {page === "enrollment" && (
+              <div>
+                  <h2> 🔗Student Enrollment</h2>
+
+                      <button onClick={() => setPage("addCourseToStudent")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
+                        ➕ Add Course
+                      </button>
+
+                      <button onClick={() => setPage("deleteCourseFromStudent")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
+                        🗑️ Delete Course
+                      </button>
+
+
+
+                      <br />
+                      <br />
+                      <button onClick={() => setPage("adminDashboard")}>
+                        ← Back to Dashboard
+                      </button>
+              </div>
+          )}
+
 
 
 
@@ -776,6 +870,61 @@ async function deleteCourse() {
                 <button onClick={() => setPage('courseMenu')}>Back</button>
              </div>
       )}
+
+
+           {page === "addCourseToStudent" && (
+              <div>
+                  <h2>Student Enrollment</h2>
+
+                  <input
+                      type = "number"
+                      placeholder = "student ID"
+                       onChange={(e) => setEnrollmentId(e.target.value)}
+                  />
+
+                  <input
+                      type = "text"
+                      placeholder = "Course Name"
+                       onChange={(e) => setEnrollmentCourseName(e.target.value)}
+                  />
+
+                  <button onClick={deleteCourseFromStudent}>
+                      Delete
+                  </button>
+
+                  <button onClick={() => setPage('adminDashboard')}>Back</button>
+
+              </div>
+          )}
+
+           {page === "deleteCourseFromStudent" && (
+              <div>
+                  <h2>Student Enrollment</h2>
+
+                  <input
+                      type = "number"
+                      placeholder = "student ID"
+                       onChange={(e) => setEnrollmentId(e.target.value)}
+                  />
+
+                  <input
+                      type = "text"
+                      placeholder = "Course Name"
+                       onChange={(e) => setEnrollmentCourseName(e.target.value)}
+                  />
+
+                  <button onClick={addCourseToStudent}>
+                      Enroll
+                  </button>
+
+                  <button onClick={() => setPage('adminDashboard')}>Back</button>
+
+              </div>
+          )}
+
+
+
+
 
 
         {page === "updateStudent" && (
