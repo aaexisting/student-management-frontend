@@ -888,8 +888,8 @@ async function deleteCourseFromStudent() {
                        onChange={(e) => setEnrollmentCourseName(e.target.value)}
                   />
 
-                  <button onClick={deleteCourseFromStudent}>
-                      Delete
+                  <button onClick={addCourseToStudent}>
+                      Enroll
                   </button>
 
                   <button onClick={() => setPage('adminDashboard')}>Back</button>
@@ -913,8 +913,8 @@ async function deleteCourseFromStudent() {
                        onChange={(e) => setEnrollmentCourseName(e.target.value)}
                   />
 
-                  <button onClick={addCourseToStudent}>
-                      Enroll
+                  <button onClick={deleteCourseFromStudent}>
+                      Delete
                   </button>
 
                   <button onClick={() => setPage('adminDashboard')}>Back</button>
