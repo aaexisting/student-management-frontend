@@ -331,6 +331,9 @@ async function addCourseToStudent() {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
+                     body: JSON.stringify({
+                         course_names: [enrollmentCourseName],
+                     }),
                 }
             );
             const data = await response.json()
