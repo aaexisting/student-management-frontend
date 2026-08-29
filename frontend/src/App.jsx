@@ -358,45 +358,22 @@ async function deleteCourseFromStudent() {
                 {
                     method: "DELETE",
                     headers: {
+                         "Content-Type" : "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                }
-            );
-            const data = await response.json()
-
-            if (response.ok){
-                alert("Course removed from student successfully!");
-                setEnrollmentId("")
-            } else {
-                alert(JSON.stringify(data.detail || data));
-            }async function deleteCourseFromStudent() {
-        try {
-            const response = await fetch(
-                `https://student-management-api.fastapicloud.dev/students/${enrollmentId}/courses`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body : JSON.stringify({
+                     body: JSON.stringify({
                          course_names: selectedCourses,
                      }),
                 }
             );
             const data = await response.json()
 
-            if (response.ok){
-                alert("Course removed from student successfully!");
+             if (response.ok){
+                alert("Course deleted from student successfully!");
                 setEnrollmentId("")
             } else {
                 alert(JSON.stringify(data.detail || data));
             }
-        } catch (error) {
-            console.error(error);
-            alert("Could not connect to server");
-        }
-}
-
         } catch (error) {
             console.error(error);
             alert("Could not connect to server");
