@@ -408,10 +408,28 @@ async function deleteCourse() {
                          Student Management System
                      </h1>
                      <h2>Dashboard</h2>
-                     <button onClick={() => setPage("studentMenu")}>
+                     <button onClick={() => setPage("studentMenu")}
+                             style={{
+                                  width: '160px',
+                                  height: '100px',
+                                  fontSize: '18px',
+                                  borderRadius: '12px',
+                                  border: '1px solid #ccc',
+                                  cursor: 'pointer',
+                                  margin: '8px',
+                             }}>
                          ‍🎓 Students
                      </button>
-                     <button onClick={() => setPage("courseMenu")}>
+                     <button onClick={() => setPage("courseMenu")}
+                     style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                          📚 Courses
                      </button>
                  </div>
@@ -420,24 +438,69 @@ async function deleteCourse() {
               {page === "studentMenu" && (
                   <div>
                       <h2>👨‍🎓 Students</h2>
-                      <button onClick={() => setPage("students")}>
+                      <button onClick={() => setPage("students")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                             👥 View Students
                       </button>
 
-                      <button onClick={() => setPage("addStudent")}>
+                      <button onClick={() => setPage("addStudent")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                             ➕ Add Student
                       </button>
 
-                      <button onClick={() => setPage("updateStudent")}>
+                      <button onClick={() => setPage("updateStudent")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                             ✏️ Update Student
                       </button>
 
-                      <button onClick={() => setPage("deleteStudent")}>
+                      <button onClick={() => setPage("deleteStudent")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                             🗑️ Delete Student
                       </button>
 
-                      <button onClick={() => setPage("courseStudents")}>
-                            🔎 View Student Courses
+                      <button onClick={() => setPage("courseStudents")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
+                            🔎 View Students In Course
                       </button>
                       <br />
                       <br />
@@ -450,21 +513,46 @@ async function deleteCourse() {
           {page === "courseMenu" && (
               <div>
                   <h2>📚 Courses</h2>
-                      <button onClick={() => setPage("courses")}>
+                      <button onClick={() => setPage("courses")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                           📋 View Courses
                       </button>
 
-                      <button onClick={() => setPage("addCourse")}>
+                      <button onClick={() => setPage("addCourse")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                         ➕ Add Course
                       </button>
 
-                      <button onClick={() => setPage("deleteCourse")}>
+                      <button onClick={() => setPage("deleteCourse")}
+                      style={{
+                              width: '160px',
+                              height: '100px',
+                              fontSize: '18px',
+                              borderRadius: '12px',
+                              border: '1px solid #ccc',
+                              cursor: 'pointer',
+                              margin: '8px',
+                          }}>
                         🗑️ Delete Course
                       </button>
 
-                      <button onClick={() => setPage("courseStudents")}>
-                        👥 View Students in Course
-                      </button>
+
 
                       <br />
                       <br />
