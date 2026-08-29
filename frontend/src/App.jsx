@@ -128,7 +128,12 @@ async function loginUser() {
       setToken(data.access_token)
       setRole(data.role)
       console.log("Token saved!")
-      setPage("dashboard")
+
+      if (data.role === "admin"){
+          setPage("adminDashboard")
+      } else {
+          setPage("studentDashboard")
+      }
 
     }
     else{ alert(data.detail || "Login failed");
