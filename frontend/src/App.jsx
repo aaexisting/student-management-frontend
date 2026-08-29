@@ -23,7 +23,7 @@ function App() {
   const [courseHours , setCourseHours] = useState("")
   const [deleteCourseName, setDeleteCourseName] = useState("")
   const [enrollmentId , setEnrollmentId] = useState(" ")
-  const [enrollmentCourseName , setEnrollmentCourseName]  = useState(" ")
+  const [selectedCourses , setSelectedCourses]  = useState(" ")
 
 
 
@@ -324,7 +324,7 @@ async function deleteCourse() {
 async function addCourseToStudent() {
         try {
             const response = await fetch(
-                `https://student-management-api.fastapicloud.dev/students/${enrollmentId}/courses/${enrollmentCourseName}`,
+                `https://student-management-api.fastapicloud.dev/students/${enrollmentId}/courses`,
                 {
                     method: "POST",
                     headers: {
@@ -332,7 +332,7 @@ async function addCourseToStudent() {
                         Authorization: `Bearer ${token}`,
                     },
                      body: JSON.stringify({
-                         course_names: [enrollmentCourseName],
+                         course_names: selectedCourses,
                      }),
                 }
             );
@@ -341,7 +341,6 @@ async function addCourseToStudent() {
             if (response.ok){
                 alert("Student is enrolled!");
                 setEnrollmentId("")
-                setEnrollmentCourseName("")
             } else {
                 alert(JSON.stringify(data.detail || data));
             }
@@ -500,7 +499,10 @@ async function deleteCourseFromStudent() {
                           📚 Courses
                       </button>
 
-                      <button onClick={() => setPage("enrollment")}
+                      <button onClick={() => {
+                          getCourses()
+                          setPage("enrollment")
+                      }}
                               style={{
                                   width: '160px',
                                   height: '100px',
@@ -874,7 +876,6 @@ async function deleteCourseFromStudent() {
              </div>
       )}
 
-
            {page === "addCourseToStudent" && (
               <div>
                   <h2>Student Enrollment</h2>
@@ -885,20 +886,43 @@ async function deleteCourseFromStudent() {
                        onChange={(e) => setEnrollmentId(e.target.value)}
                   />
 
-                  <input
-                      type = "text"
-                      placeholder = "Course Name"
-                       onChange={(e) => setEnrollmentCourseName(e.target.value)}
-                  />
+                  <h3>Select Courses</h3>
+                  {courses.map((course) => (
+                      <div key={course.id}>
+                          <label>
+                              <input
+                                  type="checkbox"
+                                  value={course.name}
+                                  checked={selectedCourses.includes(course.name)}
+                                  onChange={(e) => {
+                                      if (e.target.checked) {
+                                          setSelectedCourses([
+                  ...selectedCourses,
+                  course.name
+                ])
+              } else {
+                setSelectedCourses(
+                  selectedCourses.filter(
+                    (name) => name !== course.name
+                  )
+                )
+              }
+            }}
+          />
+          {course.name} ({course.credit_hours} credits)
+        </label>
+      </div>
+    ))}
 
+    <br />
                   <button onClick={addCourseToStudent}>
                       Enroll
                   </button>
 
                   <button onClick={() => setPage('adminDashboard')}>Back</button>
-
               </div>
           )}
+
 
            {page === "deleteCourseFromStudent" && (
               <div>
@@ -910,12 +934,35 @@ async function deleteCourseFromStudent() {
                        onChange={(e) => setEnrollmentId(e.target.value)}
                   />
 
-                  <input
-                      type = "text"
-                      placeholder = "Course Name"
-                       onChange={(e) => setEnrollmentCourseName(e.target.value)}
-                  />
+                   <h3>Select Courses</h3>
+                  {courses.map((course) => (
+                      <div key={course.id}>
+                          <label>
+                              <input
+                                  type="checkbox"
+                                  value={course.name}
+                                  checked={selectedCourses.includes(course.name)}
+                                  onChange={(e) => {
+                                      if (e.target.checked) {
+                                          setSelectedCourses([
+                  ...selectedCourses,
+                  course.name
+                ])
+              } else {
+                setSelectedCourses(
+                  selectedCourses.filter(
+                    (name) => name !== course.name
+                  )
+                )
+              }
+            }}
+          />
+          {course.name} ({course.credit_hours} credits)
+        </label>
+      </div>
+    ))}
 
+    <br />
                   <button onClick={deleteCourseFromStudent}>
                       Delete
                   </button>
